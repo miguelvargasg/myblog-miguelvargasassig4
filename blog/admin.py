@@ -20,4 +20,4 @@ class PostAdmin(admin.ModelAdmin):
         'status',
     )
 
-#admin.site.register(models.Post, PostAdmin)
+admin.site.register(models.Post, PostAdmin)
