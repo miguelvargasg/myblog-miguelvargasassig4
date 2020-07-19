@@ -5,6 +5,8 @@ from django.db import models
 # Create your models here.
 
 class Post(models.Model):
+    pass
+    '''
     title = models.CharField(max_length=255)
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
@@ -44,3 +46,4 @@ class Post(models.Model):
         help_text='The date & time this article was published',
         unique_for_date='published',  # Slug is unique for publication date
     )
+'''
