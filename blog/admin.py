@@ -3,6 +3,8 @@ from . import models
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
+    pass
+    '''
     prepopulated_fields = {'slug': ('title',)}
     list_display = (
         'title',
@@ -19,5 +21,6 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = (
         'status',
     )
+    '''
 
 admin.site.register(models.Post, PostAdmin)
