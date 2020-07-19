@@ -1,5 +1,5 @@
 language: python
-python: "3.7"
+python: "3.8.1"
 sudo: required
 dist: xenial
 install:
@@ -7,3 +7,5 @@ install:
 script:
   - pytest -v
   - find . -name '*.py' | xargs pylint
+services:
+  - postgresql
