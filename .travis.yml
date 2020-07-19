@@ -9,3 +9,5 @@ script:
   - find . -name '*.py' | xargs pylint
 services:
   - postgresql
+env:
+  - DATABASE_URL: postgres://postgres@localhost/myblog
