@@ -2,6 +2,28 @@ from django.contrib import admin
 from . import models
 # Register your models here.
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'post',
+        'name',
+        'email',
+        'text',
+        'approved',
+        'created',
+        'updated',
+        'author',
+    )
+    search_fields = (
+        'text',
+        'name',
+        'email',
+    )
+    list_filter = (
+        'approved',
+    )
+admin.site.register(models.Comment, CommentAdmin)
+
+@admin.register(models.Post)
 class PostAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -24,7 +46,6 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-admin.site.register(models.Post, PostAdmin)
 
 @admin.register(models.Topic)
 class TopicAdmin(admin.ModelAdmin):
