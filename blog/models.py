@@ -2,8 +2,14 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.db.models import Q
+from django.contrib.auth import get_user_model
 
 # Create your models here.
+class TopicQuerySet(models.QuerySet):
+    def get_topics(self):
+        return self.all()
+        #Topic.objects.annotate(total_posts=Count('blog_posts')).values('name','total_posts')
+
 
 class Topic(models.Model):
     name = models.CharField(
@@ -15,9 +21,10 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
-
     class Meta:
         ordering = ['name']
+
+    objects = TopicQuerySet.as_manager()
 
 class CommentQuerySet(models.QuerySet):
     def approved(self):
@@ -27,6 +34,10 @@ class CommentQuerySet(models.QuerySet):
 
 
 class PostQuerySet(models.QuerySet):
+    def get_authors(self):
+        User = get_user_model()
+        return User.objects.filter(blog_posts__in=self).distinct()
+
     def published(self):
         return self.filter(status=self.model.PUBLISHED)
 
@@ -34,9 +45,8 @@ class PostQuerySet(models.QuerySet):
         return self.filter(status=self.model.DRAFT)
 
     def find(self):
-        expression = 'django'
+        expression = 'Hello'
         return self.filter(Q(title__icontains=expression) | Q(content__icontains=expression))
-
 
 
 
