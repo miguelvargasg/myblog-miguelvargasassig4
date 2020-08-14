@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 # Create your models here.
 class TopicQuerySet(models.QuerySet):
@@ -104,6 +105,18 @@ class Post(models.Model):
 
     objects = PostQuerySet.as_manager()
 
+    def get_absolute_url(self):
+        if self.published:
+            kwargs = {
+                'year': self.published.year,
+                'month': self.published.month,
+                'day': self.published.day,
+                'slug': self.slug
+            }
+        else:
+            kwargs = {'pk': self.pk}
+
+        return reverse('post-detail', kwargs=kwargs)
 
 class Comment(models.Model):
     """
